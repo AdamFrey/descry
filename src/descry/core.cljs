@@ -1,4 +1,5 @@
-(ns descry.core)
+(ns descry.core
+  (:require [descry.protocols.datascript :as ds]))
 
-(defn hello []
-  (prn "hello?"))
+(defn all-entities [source]
+  (ds/all-entities source))
