@@ -1,0 +1,7 @@
+{:require          [descry.dev.core]
+ :init-fns         [descry.dev.core/init!]
+ :optimizations    :none
+ :source-map       true
+ :boot-reload      {:on-jsload descry.dev.core/reload!}
+ :compiler-options {:parallel-build true
+                    :asset-path     "/main.out"}}
