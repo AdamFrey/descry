@@ -1,0 +1,6 @@
+* Descry
+Warning: extremely alpha. Everything subject to change.
+** Inspiration
+*** [[https://github.com/flexsurfer/re-frisk][Re-frisk]]
+  There's also [[https://github.com/Odinodin/data-frisk-reagent][Data Frisk Reagent]]
+*** [[https://github.com/robert-stuttaford/stuttaford.me/commit/276d5106aec081334d78699f12c51a45738bea58][Radiant]]
