@@ -15,14 +15,16 @@
 
 (def empty-db (d/db conn))
 
-(defn init! [])
-
-(defn reload! []
+(def test-db
   (-> empty-db
     (d/with [{:user/name      "Adam Frey"
               :user/verified? true}
              {:user/name      "Sideshow Bob"
               :user/verified? false}])
-    (:db-after)
-    (descry/all-entities)
-    (prn)))
+    (:db-after)))
+
+(defn init! []
+  (descry/mount (js/document.getElementById "base") test-db))
+
+(defn reload! []
+  (descry/mount (js/document.getElementById "base") test-db))
