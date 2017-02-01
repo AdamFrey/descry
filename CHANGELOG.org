@@ -1,0 +1,8 @@
+* Change Log
+All notable changes to this project will be documented in this
+file. This change log follows the conventions
+of [[http://keepachangelog.org][keepachange.log.org]].
+
+** 0.1.0-master-0001
+- Descry opens a simple window with a table displaying the datascript
+  entities. Ugly as sin and basically unhelpful right now.
