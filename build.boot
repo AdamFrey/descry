@@ -1,4 +1,4 @@
-(def project 'descry)
+(def project 'afrey/descry)
 (def version "0.1.0-master-0001")
 
 (set-env!
@@ -17,12 +17,11 @@
                     [weasel "0.7.0"  :scope "test"]
                     [org.clojure/tools.nrepl "0.2.12" :scope "test"]])
 
-
 (task-options!
   pom {:project     project
        :version     version
        :description "Visualization of Datascript state"
-       :url         "http://example/FIXME"
+       :url         "https://github.com/adamfrey/descry"
        :scm         {:url "https://github.com/adamfrey/descry"}
        :license     {"MIT" "https://opensource.org/licenses/MIT"}})
 
@@ -31,13 +30,18 @@
   []
   (comp (pom) (jar) (install)))
 
+(deftask deploy []
+  (comp
+    (build)
+    (push :repo "clojars" :gpg-sign false)))
+
 ;; Dev ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (require
-  '[adzerk.boot-cljs      :refer [cljs]]
-  '[adzerk.boot-cljs-repl :refer [cljs-repl start-repl]]
-  '[powerlaces.boot-figreload    :refer [reload]]
-  '[pandeiro.boot-http    :refer [serve]])
+  '[adzerk.boot-cljs           :refer [cljs]]
+  '[adzerk.boot-cljs-repl      :refer [cljs-repl start-repl]]
+  '[powerlaces.boot-figreload  :refer [reload]]
+  '[pandeiro.boot-http         :refer [serve]])
 
 (defn set-development-env! []
   (set-env!
