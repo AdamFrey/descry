@@ -1,5 +1,5 @@
 (def project 'afrey/descry)
-(def version "0.1.0-master-0001")
+(def version "0.1.0-master-0002")
 
 (set-env!
   :resource-paths #{"src"}
@@ -38,7 +38,11 @@
   (comp
     (build)
     (#'deploy/collect-clojars-credentials)
-    (push :tag true :repo "deploy-clojars" :gpg-sign false)))
+    (push
+      :tag true
+      :ensure-release true
+      :repo "deploy-clojars"
+      :gpg-sign false)))
 
 ;; Dev ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -51,8 +55,7 @@
 (defn set-development-env! []
   (set-env!
     ;; :dependencies
-    :source-paths #(conj % "dev/src")
-    :resource-paths #{"dev/resources"}))
+    :resource-paths #(conj % "dev/src" "dev/resources")))
 
 (deftask dev []
   (set-development-env!)

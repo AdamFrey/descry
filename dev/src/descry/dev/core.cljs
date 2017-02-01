@@ -18,9 +18,12 @@
 (defn init! []
   (d/transact conn
     [{:user/name      "Adam Frey"
-      :user/verified? true}
+      :user/verified? true
+      :user/extra-attr "Something I don't want to see"}
      {:user/name      "Sideshow Bob"
       :user/verified? false}])
-  (descry/enable-descry! conn))
+
+  (descry/enable-descry! conn
+    {:exclude-attributes #{:user/extra-attr}}))
 
 (defn reload! [])

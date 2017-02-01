@@ -6,8 +6,11 @@
 (defn all-entities [source]
   (ds/all-entities source))
 
-(defn enable-descry! [source]
-  (when-not @data/initialized?
-    (reset! data/initialized? true)
-    (reset! data/source source)
-    (js/setTimeout ui/render-descry-launch 100)))
+(defn enable-descry!
+  ([source] (enable-descry! source {}))
+  ([source opts]
+   (when-not @data/initialized?
+     (reset! data/initialized? true)
+     (reset! data/source source)
+     (reset! data/options opts)
+     (js/setTimeout ui/render-descry-launch 100 opts))))

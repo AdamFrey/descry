@@ -15,12 +15,12 @@
   (let [entities       (into {}
                          (map (fn [[key val]]
                                 [key (attrs->entity-map val)]) entities))
-        headers        (reduce
-                         (fn [acc [_ e-map]]
-                           (apply conj acc (keys e-map)))
-                         #{}
-                         entities)
-        sorted-headers (sort headers)]
+        headers        (->> entities
+                         (reduce
+                           (fn [acc [_ e-map]]
+                             (apply conj acc (keys e-map))) #{})
+                         (filter (fn [header] (not (contains? (:exclude-attributes @data/options) header))))
+                         (sort))]
     [:table {:style {:border-collapse "collapse"
                      :font-family     "Lucida Sans Unicode, Lucida Grande, Sans-Serif"
                      :width           "100%"
@@ -28,14 +28,14 @@
      [:thead {:style {:border-bottom "2px solid #000"}}
       [:tr
        [:th "id"]
-       (for [header sorted-headers]
+       (for [header headers]
          [:th {:key header} (str header)])]]
      [:tbody
       (for [[id entity] entities]
         [:tr {:key   id
               :style {:border-bottom  "1px solid black"}}
          [:td {:style {:padding "10px"}} id]
-         (for [header sorted-headers]
+         (for [header headers]
            [:td {:key header} (str (get entity header))])])]]))
 
 (def descry-html
