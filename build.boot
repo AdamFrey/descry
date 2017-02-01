@@ -2,13 +2,14 @@
 (def version "0.1.0-master-0001")
 
 (set-env!
-  :source-paths   #{"src"}
+  :resource-paths #{"src"}
   :dependencies   '[[org.clojure/clojure "1.9.0-alpha14" :scope "test"]
                     [org.clojure/clojurescript "1.9.456" :scope "provided"]
                     [datascript "0.15.5" :scope "provided"]
                     [rum "0.10.8"]
 
                     ;; Test Dependencies
+                    [adzerk/bootlaces    "0.1.13" :scope "test"]
                     [pandeiro/boot-http "0.7.6" :scope "test"]
                     [adzerk/boot-cljs "2.0.0-SNAPSHOT" :scope "test"]
                     [powerlaces/boot-figreload "0.1.0-SNAPSHOT" :scope "test"]
@@ -25,6 +26,9 @@
        :scm         {:url "https://github.com/adamfrey/descry"}
        :license     {"MIT" "https://opensource.org/licenses/MIT"}})
 
+(require
+  '[adzerk.bootlaces :as deploy])
+
 (deftask build
   "Build and install the project locally."
   []
@@ -33,7 +37,8 @@
 (deftask deploy []
   (comp
     (build)
-    (push :repo "clojars" :gpg-sign false)))
+    (#'deploy/collect-clojars-credentials)
+    (push :tag true :repo "deploy-clojars" :gpg-sign false)))
 
 ;; Dev ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
