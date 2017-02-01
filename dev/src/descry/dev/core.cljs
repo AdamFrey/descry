@@ -21,7 +21,6 @@
       :user/verified? true}
      {:user/name      "Sideshow Bob"
       :user/verified? false}])
-  (descry/mount (js/document.getElementById "base") conn))
+  (descry/enable-descry! conn))
 
-(defn reload! []
-  (descry/mount (js/document.getElementById "base") conn))
+(defn reload! [])

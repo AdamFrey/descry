@@ -1,7 +1,8 @@
 (ns descry.ui.core
-  (:require [rum.core :as rum]
+  (:require [descry.data :as data]
             [descry.protocols.datascript :as ds]
-            [goog.object :as obj]))
+            [goog.object :as obj]
+            [rum.core :as rum]))
 
 (defn attrs->entity-map [attrs]
   (into {}
@@ -48,11 +49,9 @@
    </body>
    </html>")
 
-(defonce source (atom nil))
-
 (defn mount-descry [w d]
   (let [base-element (.getElementById d "descry")]
-    (rum/mount (entity-table (ds/all-entities (ds/db @source)))
+    (rum/mount (entity-table (ds/all-entities (ds/db @data/source)))
       base-element)))
 
 (defn open-window []
@@ -85,6 +84,7 @@
      :on-click open-window}
     "descry"]])
 
-(defn mount [element src]
-  (reset! source src)
-  (rum/mount (descry-launch-button) element))
+(defn render-descry-launch []
+  (let [div (js/document.createElement "div")]
+    (js/document.body.appendChild div)
+    (rum/mount (descry-launch-button) div)))
