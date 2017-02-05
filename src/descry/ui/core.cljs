@@ -31,60 +31,19 @@
        (for [header headers]
          [:th {:key header} (str header)])]]
      [:tbody
-      (for [[id entity] entities]
-        [:tr {:key   id
-              :style {:border-bottom  "1px solid black"}}
-         [:td {:style {:padding "10px"}} id]
-         (for [header headers]
-           [:td {:key header} (str (get entity header))])])]]))
-
-(def descry-html
-  "<!DOCTYPE html>
-   <html>\n
-   <head>
-     <title>Descry</title>
-   </head>
-   <body>
-     <div id=\"descry\"></div>
-   </body>
-   </html>")
+      (let [cell-styles {:padding "10px"
+                         :border-right "1px solid black"}]
+        (for [[id entity] entities]
+          [:tr {:key   id
+                :style {:border-bottom  "1px solid black"}}
+           [:td {:style (assoc cell-styles
+                          :border-left "1px solid black")} id]
+           (for [header headers]
+             [:td {:key header
+                   :style cell-styles}
+              (str (get entity header))])]))]]))
 
 (defn mount-descry [w d]
   (let [base-element (.getElementById d "descry")]
     (rum/mount (entity-table (ds/all-entities (ds/db @data/source)))
       base-element)))
-
-(defn open-window []
-  (let [w (js/window.open "" "Descry" "width=800,height=400,resizable=yes,scrollbars=yes,status=no,directories=no,toolbar=no,menubar=no")
-        d (.-document w)]
-    (.open d)
-    (.write d descry-html)
-    (obj/set w "onload" #(mount-descry w d))
-    (.close d)))
-
-(rum/defc descry-launch-button
-  < rum/static
-  []
-  [:div {:style {:position "fixed"
-                 :left     "10px"
-                 :top      "0px"
-                 :z-index  "999"}}
-   [:div
-    {:style {:fontFamily "Consolas,Monaco,Courier New,monospace"
-             :fontSize "12px"
-             :display "inline-block"
-             :background-color "#CCCCCC"
-             :cursor "pointer"
-             :padding "6px"
-             :text-align "left"
-             :border-radius "2px"
-             :border-bottom-left-radius "0px"
-             :border-bottom-right-radius "0px"
-             :padding-left "2rem"}
-     :on-click open-window}
-    "descry"]])
-
-(defn render-descry-launch []
-  (let [div (js/document.createElement "div")]
-    (js/document.body.appendChild div)
-    (rum/mount (descry-launch-button) div)))
