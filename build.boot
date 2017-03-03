@@ -24,7 +24,7 @@
        :description "Visualization of Datascript state"
        :url         "https://github.com/adamfrey/descry"
        :scm         {:url "https://github.com/adamfrey/descry"}
-       :license     {"MIT" "https://opensource.org/licenses/MIT"}})
+       :license     {"GPL 3.0" "https://opensource.org/licenses/GPL-3.0"}})
 
 (require
   '[adzerk.bootlaces :as deploy])
