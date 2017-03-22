@@ -13,9 +13,10 @@
                     [pandeiro/boot-http "0.7.6" :scope "test"]
                     [adzerk/boot-cljs "2.0.0-SNAPSHOT" :scope "test"]
                     [powerlaces/boot-figreload "0.1.0-SNAPSHOT" :scope "test"]
-                    [adzerk/boot-cljs-repl "0.3.3" :scope "test"]
-                    [com.cemerick/piggieback "0.2.1"  :scope "test"]
-                    [weasel "0.7.0"  :scope "test"]
+                    [adzerk/boot-reload "0.5.1" :scope "test"]
+                    ;; [adzerk/boot-cljs-repl "0.3.3" :scope "test"]
+                    ;; [com.cemerick/piggieback "0.2.1"  :scope "test"]
+                    ;; [weasel "0.7.0"  :scope "test"]
                     [org.clojure/tools.nrepl "0.2.12" :scope "test"]])
 
 (task-options!
@@ -48,8 +49,9 @@
 
 (require
   '[adzerk.boot-cljs           :refer [cljs]]
-  '[adzerk.boot-cljs-repl      :refer [cljs-repl start-repl]]
-  '[powerlaces.boot-figreload  :refer [reload]]
+  ;; '[adzerk.boot-cljs-repl      :refer [cljs-repl start-repl]]
+  ;;  '[powerlaces.boot-figreload  :refer [reload]]
+  '[adzerk.boot-reload :refer [reload]]
   '[pandeiro.boot-http         :refer [serve]])
 
 (defn set-development-env! []
@@ -63,5 +65,5 @@
     (watch)
     (speak)
     (reload)
-    (cljs-repl :nrepl-opts {:port 5055})
+    ;; (cljs-repl :nrepl-opts {:port 5055})
     (cljs)))
