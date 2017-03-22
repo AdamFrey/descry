@@ -11,7 +11,7 @@
                     ;; Test Dependencies
                     [adzerk/bootlaces    "0.1.13" :scope "test"]
                     [pandeiro/boot-http "0.7.6" :scope "test"]
-                    [adzerk/boot-cljs "2.0.0-SNAPSHOT" :scope "test"]
+                    [adzerk/boot-cljs "2.0.0" :scope "test"]
                     [powerlaces/boot-figreload "0.1.0-SNAPSHOT" :scope "test"]
                     [adzerk/boot-reload "0.5.1" :scope "test"]
                     ;; [adzerk/boot-cljs-repl "0.3.3" :scope "test"]
