@@ -3,3 +3,4 @@
 (defonce initialized? (atom false))
 (defonce source (atom nil))
 (defonce options (atom {}))
+(defonce window (atom nil))

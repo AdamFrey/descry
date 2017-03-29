@@ -4,25 +4,6 @@
             [goog.object :as obj]
             [rum.core :as rum]))
 
-(def descry-html
-  "<!DOCTYPE html>
-   <html>\n
-   <head>
-     <title>Descry</title>
-   </head>
-   <body>
-     <div id=\"descry\"></div>
-   </body>
-   </html>")
-
-(defn open-window []
-  (let [w (js/window.open "" "Descry" "width=800,height=400,resizable=yes,scrollbars=yes,status=no,directories=no,toolbar=no,menubar=no")
-        d (.-document w)]
-    (.open d)
-    (.write d descry-html)
-    (obj/set w "onload" #(ui/mount-descry w d))
-    (.close d)))
-
 (rum/defc descry-launch-button
   < rum/static
   []
@@ -42,7 +23,7 @@
              :border-bottom-left-radius "0px"
              :border-bottom-right-radius "0px"
              :padding-left "2rem"}
-     :on-click open-window}
+     :on-click ui/open-window}
     "descry"]])
 
 (defn render-descry-launch []

@@ -12,7 +12,7 @@
   (reset! data/source source)
   (reset! data/options opts))
 
-(defn mount-descry [el source opts]
+#_(defn mount-descry [el source opts]
   (when-not @data/initialized?
     (initialize-descry-data source opts)
     #_(ui/mount)))

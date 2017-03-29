@@ -43,7 +43,32 @@
                    :style cell-styles}
               (str (get entity header))])]))]]))
 
-(defn mount-descry [w d]
-  (let [base-element (.getElementById d "descry")]
-    (rum/mount (entity-table (ds/all-entities (ds/db @data/source)))
-      base-element)))
+(defn mount-descry
+  "Mounts descry into a document. If no document is provided, fallsback to the
+  window stored in data/window."
+  ([] (mount-descry (.-document @data/window)))
+  ([document]
+   (let [base-element (.getElementById document "descry")]
+     (rum/mount (entity-table (ds/all-entities (ds/db @data/source)))
+       base-element))))
+
+(def descry-html
+  "<!DOCTYPE html>
+   <html>\n
+   <head>
+     <title>Descry</title>
+   </head>
+   <body>
+     <div id=\"descry\"></div>
+   </body>
+   </html>")
+
+(defn open-window []
+  (let [w (js/window.open "" "Descry" "width=800,height=400,resizable=yes,scrollbars=yes,status=no,directories=no,toolbar=no,menubar=no")
+        d (.-document w)]
+    (reset! data/window w)
+    (.open d)
+    (.write d descry-html)
+    (obj/set w "onload" #(mount-descry d))
+    (.close d)))
+

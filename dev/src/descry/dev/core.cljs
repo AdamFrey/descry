@@ -1,5 +1,6 @@
 (ns descry.dev.core
   (:require [descry.core :as descry]
+            [descry.ui.core :as descry-ui]
             [datascript.core :as d]))
 
 (enable-console-print!)
@@ -30,4 +31,5 @@
   (set-up-descry conn))
 
 (defn reload! []
-  (set-up-descry conn))
+  (set-up-descry conn)
+  (descry-ui/mount-descry))
