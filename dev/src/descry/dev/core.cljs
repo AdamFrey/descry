@@ -18,7 +18,9 @@
 
 (defn set-up-descry [conn]
   (descry/enable-descry! conn
-    {:exclude-attributes #{:user/extra-attr}}))
+    {:exclude-attributes #{:user/extra-attr}
+     :schema             {"User"      #{:user/name :user/verified?}
+                          "Todo List" #{:todo-list/name}}}))
 
 (defn init! []
   (d/transact conn
