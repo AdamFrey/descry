@@ -26,7 +26,8 @@
       :user/verified? true
       :user/extra-attr "Something I don't want to see"}
      {:user/name      "Sideshow Bob"
-      :user/verified? false}])
+      :user/verified? false}
+     {:todo-list/name "Todo List."}])
 
   (set-up-descry conn))
 

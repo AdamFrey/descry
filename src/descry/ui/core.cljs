@@ -12,15 +12,15 @@
 (rum/defc entity-table
   < rum/static
   [entities]
-  (let [entities       (into {}
-                         (map (fn [[key val]]
-                                [key (attrs->entity-map val)]) entities))
-        headers        (->> entities
-                         (reduce
-                           (fn [acc [_ e-map]]
-                             (apply conj acc (keys e-map))) #{})
-                         (filter (fn [header] (not (contains? (:exclude-attributes @data/options) header))))
-                         (sort))]
+  (let [entities (into {}
+                   (map (fn [[key val]]
+                          [key (attrs->entity-map val)]) entities))
+        headers  (->> entities
+                   (reduce
+                     (fn [acc [_ e-map]]
+                       (apply conj acc (keys e-map))) #{})
+                   (filter (fn [header] (not (contains? (:exclude-attributes @data/options) header))))
+                   (sort))]
     [:table {:style {:border-collapse "collapse"
                      :font-family     "Lucida Sans Unicode, Lucida Grande, Sans-Serif"
                      :width           "100%"
@@ -29,17 +29,18 @@
       [:tr
        [:th "id"]
        (for [header headers]
-         [:th {:key header} (str header)])]]
+         [:th {:key (str header)}
+          (str header)])]]
      [:tbody
-      (let [cell-styles {:padding "10px"
+      (let [cell-styles {:padding      "10px"
                          :border-right "1px solid black"}]
         (for [[id entity] entities]
           [:tr {:key   id
-                :style {:border-bottom  "1px solid black"}}
+                :style {:border-bottom "1px solid black"}}
            [:td {:style (assoc cell-styles
                           :border-left "1px solid black")} id]
            (for [header headers]
-             [:td {:key header
+             [:td {:key   (str header)
                    :style cell-styles}
               (str (get entity header))])]))]]))
 
