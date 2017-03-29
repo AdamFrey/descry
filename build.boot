@@ -7,6 +7,7 @@
                     [org.clojure/clojurescript "1.9.456" :scope "provided"]
                     [datascript "0.15.5" :scope "provided"]
                     [rum "0.10.8"]
+                    [sablono "0.8.0"]
 
                     ;; Test Dependencies
                     [adzerk/bootlaces    "0.1.13" :scope "test"]
