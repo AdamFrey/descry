@@ -15,6 +15,10 @@
 
 (def empty-db (d/db conn))
 
+(defn set-up-descry [conn]
+  (descry/enable-descry! conn
+    {:exclude-attributes #{:user/extra-attr}}))
+
 (defn init! []
   (d/transact conn
     [{:user/name      "Adam Frey"
@@ -23,7 +27,7 @@
      {:user/name      "Sideshow Bob"
       :user/verified? false}])
 
-  (descry/enable-descry! conn
-    {:exclude-attributes #{:user/extra-attr}}))
+  (set-up-descry conn))
 
-(defn reload! [])
+(defn reload! []
+  (set-up-descry conn))

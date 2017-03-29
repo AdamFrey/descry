@@ -21,5 +21,5 @@
   ([source] (enable-descry! source {}))
   ([source opts]
    (when-not @data/initialized?
-     (initialize-descry-data source opts)
-     (js/setTimeout launcher/render-descry-launch 100 opts))))
+     (initialize-descry-data source opts))
+   (js/setTimeout launcher/render-descry-launch 100 opts)))
