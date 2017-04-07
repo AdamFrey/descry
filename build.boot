@@ -1,5 +1,5 @@
 (def project 'afrey/descry)
-(def version "0.1.0-master-0003")
+(def version "0.1.0-master-0004")
 
 (set-env!
   :resource-paths #{"src"}
