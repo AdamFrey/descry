@@ -15,43 +15,61 @@
                (not (contains? (:exclude-attributes options) header))))
      (sort))))
 
+(defn most-frequent [items]
+  (->> items
+    (frequencies)
+    (sort-by val)
+    (reverse)
+    (ffirst)))
+
+(defn group-entities-by-common-namespace [entities]
+  (group-by
+    (fn [[_ e-map]]
+      (most-frequent (map namespace (keys e-map))))
+    entities))
+
 (defn entities->tables [entities options]
   #_(if-let [schema (:schema options)]
     []
     [{:headers (entities->headers entities options)
       :entities entities}])
-  [{:table-name "Table"
-    :headers (entities->headers entities options)
-    :entities entities}])
+  (->> entities
+    (group-entities-by-common-namespace)
+    (map (fn [[table-name entities :as thing]]
+           {:table-name table-name
+            :headers (entities->headers entities options)
+            :entities entities}))))
 
 (rum/defc entity-table
   < rum/static
   [entities]
   [:div
    (for [{:keys [table-name headers entities]} (entities->tables entities @data/options)]
-     [:table {:key table-name
-              :style {:border-collapse "collapse"
-                      :font-family     "Lucida Sans Unicode, Lucida Grande, Sans-Serif"
-                      :width           "100%"
-                      :text-align      "left"}}
-      [:thead {:style {:border-bottom "2px solid #000"}}
-       [:tr {}
-        [:th {} "id"]
-        (for [header headers]
-          [:th {:key (str header)}
-           (str header)])]]
-      [:tbody {}
-       (let [cell-styles {:padding      "10px"
-                          :border-right "1px solid black"}]
-         (for [[id entity] entities]
-           [:tr {:key   id
-                 :style {:border-bottom "1px solid black"}}
-            [:td {:style (assoc cell-styles
-                           :border-left "1px solid black")} id]
-            (for [header headers]
-              [:td {:key   (str header)
-                    :style cell-styles}
-               (str (get entity header))])]))]])])
+     [:div
+      [:h2 table-name]
+      [:table {:key table-name
+               :style {:border-collapse "collapse"
+                       :font-family     "Lucida Sans Unicode, Lucida Grande, Sans-Serif"
+                       :width           "100%"
+                       :text-align      "left"}}
+       [:thead {:style {:border-bottom "2px solid #000"}}
+        [:tr {}
+         [:th {} "id"]
+         (for [header headers]
+           [:th {:key (str header)}
+            (str header)])]]
+       [:tbody {}
+        (let [cell-styles {:padding      "10px"
+                           :border-right "1px solid black"}]
+          (for [[id entity] entities]
+            [:tr {:key   id
+                  :style {:border-bottom "1px solid black"}}
+             [:td {:style (assoc cell-styles
+                            :border-left "1px solid black")} id]
+             (for [header headers]
+               [:td {:key   (str header)
+                     :style cell-styles}
+                (str (get entity header))])]))]]])])
 
 (defn mount-descry
   "Mounts descry into a document. If no document is provided, fallsback to the

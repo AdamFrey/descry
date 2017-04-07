@@ -24,11 +24,12 @@
 
 (defn init! []
   (d/transact conn
-    [{:user/name      "Adam Frey"
-      :user/verified? true
+    [{:user/name       "Adam Frey"
+      :user/verified?  true
       :user/extra-attr "Something I don't want to see"}
      {:user/name      "Sideshow Bob"
-      :user/verified? false}
+      :user/verified? false
+      :other/thing     "ok"}
      {:todo-list/name "Todo List."}])
 
   (set-up-descry conn))
