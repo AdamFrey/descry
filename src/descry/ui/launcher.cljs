@@ -7,22 +7,23 @@
 (rum/defc descry-launch-button
   < rum/static
   []
-  [:div {:style {:position "fixed"
-                 :left     "10px"
-                 :top      "0px"
-                 :z-index  "999"}}
+  [:#descry-launcher
+   {:style {:position "fixed"
+            :right    "0px"
+            :bottom   "0px"
+            :z-index  "999"}}
    [:div
-    {:style {:fontFamily "Consolas,Monaco,Courier New,monospace"
-             :fontSize "12px"
-             :display "inline-block"
-             :background-color "#CCCCCC"
-             :cursor "pointer"
-             :padding "6px"
-             :text-align "left"
-             :border-radius "2px"
-             :border-bottom-left-radius "0px"
+    {:style {:fontFamily                 "Consolas,Monaco,Courier New,monospace"
+             :fontSize                   "12px"
+             :display                    "inline-block"
+             :background-color           "#CCCCCC"
+             :cursor                     "pointer"
+             :padding                    "6px"
+             :text-align                 "left"
+             :border-radius              "2px"
+             :border-bottom-left-radius  "0px"
              :border-bottom-right-radius "0px"
-             :padding-left "2rem"}
+             :padding-left               "2rem"}
      :on-click ui/open-window}
     "descry"]])
 
