@@ -20,6 +20,10 @@
 (defn enable-descry!
   ([source] (enable-descry! source {}))
   ([source opts]
+   (d/listen! source :re-render
+     (fn [tx-report]
+       (ui/mount-descry)))
+
    (when-not @data/initialized?
      (initialize-descry-data source opts))
    (js/setTimeout launcher/render-descry-launch 100 opts)))
