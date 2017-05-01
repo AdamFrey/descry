@@ -81,14 +81,20 @@
 
 #_(prn (order-headers headers [page-headers listing-headers]))
 
-(defn most-frequent [items]
+(defn most-frequent
+  "Returns the element that most frequently occurs in a collection.
+  non-deterministic in the case of a tie"
+  [items]
   (->> items
     (frequencies)
     (sort-by val)
     (reverse)
     (ffirst)))
 
-(defn group-entities-by-common-namespace [entities]
+(defn group-entities-by-common-namespace
+  "Returns a collection of entities grouped by their most common attribute
+  namespace."
+  [entities]
   (group-by
     (fn [[_ e-map]]
       (most-frequent (map namespace (keys e-map))))
@@ -101,8 +107,8 @@
     [{:headers (entities->headers entities options)
       :entities entities}])
   (->> entities
-    (group-entities-by-common-namespace)
-    (map (fn [[table-name entities :as thing]]
+    (group-entities-by-common-map)
+    (namespace (fn [[table-name entities :as thing]]
            {:table-name table-name
             :headers (entities->headers entities options)
             :entities entities}))))
