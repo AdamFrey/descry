@@ -10,9 +10,10 @@
 (def schema
   {:state/part {:db/unique :db.unique/identity}
 
-   :user/name      {:db/cardinality :db.cardinality/one
-                    :db/unique      :db.unique/identity}
-   :user/verified? {:db/cardinality :db.cardinality/one}})
+   :user/name       {:db/cardinality :db.cardinality/one
+                     :db/unique      :db.unique/identity}
+   :todo-list/owner {:db/valueType   :db.type/ref
+                     :db/cardinality :db.cardinality/one}})
 
 (defonce conn (d/create-conn rschema/schema))
 
@@ -31,13 +32,15 @@
 (defn init! []
   (d/transact conn
     (concat dbmock/mock-data dbmock/offline-data)
-    #_[{:user/name       "Adam Frey"
+    #_[{:db/id -1
+        :user/name       "Adam Frey"
       :user/verified?  true
       :user/extra-attr "Something I don't want to see"}
      {:user/name      "Sideshow Bob"
       :user/verified? false
-      :other/thing     "ok"}
-     {:todo-list/name "Todo List."}])
+      :other/thing    "ok"}
+     {:todo-list/name "Todo List."
+      :todo-list/owner -1}])
 
   (set-up-descry conn))
 
